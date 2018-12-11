@@ -5,9 +5,6 @@
       <h1 class="title">
         rv-next
       </h1>
-      <h2 class="subtitle">
-        My stylish Nuxt.js project
-      </h2>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
