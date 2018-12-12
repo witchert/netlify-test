@@ -5,26 +5,30 @@
       <h1 class="title">
         rv-next
       </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
+      <h2>Videos</h2>
+      <ul>
+        <li v-for="page in pages">
+          <a :href="`/video/${page.id}`" v-html="page.title.rendered"/>
+        </li>
+      </ul>
     </div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Logo from '~/components/Logo.vue';
+import WPAPI from 'wpapi';
 
 export default {
   components: {
     Logo
+  },
+  async asyncData({ app }) {
+    const wp = new WPAPI({endpoint: 'https://local.realvision.com/wp-json'});
+    wp.videos = wp.registerRoute('wp/v2', '/video/(?P<id>)');
+    const videos = await wp.videos();
+
+    return {pages: videos }
   }
 }
 </script>
